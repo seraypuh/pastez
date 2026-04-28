@@ -6,13 +6,24 @@ import secrets
 
 router = APIRouter()
 
-@router.post("/pastes")
-def create(paste: PasteCreate):
+@router.get("/p/{slug}")
+def get_paste(slug: str):
     db = SessionLocal()
+
     try:
-        slug = secrets.token_urlsafe(5)
-        new_paste = create_paste(db, paste, slug)
-        return {"slug": new_paste.slug}
+        paste = get_paste_by_slug(db, slug)
+
+        if not paste:
+            raise HTTPException(status_code=404, detail="Not found")
+
+        increment_views(db, paste)
+
+        return {
+            "title": paste.title,
+            "content": paste.content,
+            "views": paste.views
+        }
+
     finally:
         db.close()
 
