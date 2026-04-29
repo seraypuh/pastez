@@ -94,13 +94,21 @@ uvicorn app.main:app --reload
 
 # Структура проекта
 app/
+
  ├── main.py          # точка входа
+ 
  ├── models.py        # модели БД
+ 
  ├── schemas.py       # Pydantic схемы
+ 
  ├── crud.py          # работа с БД
+ 
  ├── database.py      # подключение к SQLite
+ 
  └── routers/
+ 
       ├──auth.py      # пустой файл, авторизация появится в будущем
+      
       └── pastes.py   # API эндпоинты
 
 # Планируемые улучшения
